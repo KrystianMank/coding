@@ -4,6 +4,8 @@ from sys import exit
 from random import randint, choice
 
 #klasa gracza (sprite)
+
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -49,6 +51,8 @@ class Player(pygame.sprite.Sprite):
         self.animation_state()
 
 #klasa przeszkód (sprite)
+
+
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self, type):
         super().__init__() #dziedziczenie kontruktora klasy Sprite
@@ -100,12 +104,15 @@ def display_score():
     return current_time
 
 #funkcja bada czy sprite koliduje z grupą
+
+
 def collision_sprite():
     if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
         obstacle_group.empty() #jeśli tak czyści grupę sprite'ów
         return False
     else:
         return True
+
 
 #inicjalizacja pygame (gry)
 pygame.init()
