@@ -1,5 +1,64 @@
 import pygame
 from sys import exit
+from random import randint
+
+
+class Snake(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface((25, 25))
+        self.image.fill((0, 0, 255))
+        self.rect = self.image.get_rect(center=(300, 300))
+        self.direction = None
+
+    def player_input(self, key_pressed):
+        if key_pressed == pygame.K_w:
+            self.direction = 'up'
+        elif key_pressed == pygame.K_s:
+            self.direction = 'down'
+        elif key_pressed == pygame.K_a:
+            self.direction = 'left'
+        elif key_pressed == pygame.K_d:
+            self.direction = 'right'
+
+    def move(self):
+        if self.direction == 'up':
+            self.rect.y -= 25
+            if self.rect.top <= 0:
+                self.rect.top = 0
+        elif self.direction == 'down':
+            self.rect.y += 25
+            if self.rect.bottom >= 600:
+                self.rect.bottom = 600
+        elif self.direction == 'left':
+            self.rect.x -= 25
+            if self.rect.left <= 0:
+                self.rect.left = 0
+        elif self.direction == 'right':
+            self.rect.x += 25
+            if self.rect.right >= 600:
+                self.rect.right = 600
+
+    def update(self, key_pressed, update):
+        if update:
+            self.player_input(key_pressed)
+        else:
+            self.move()
+
+
+class Apple(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface((25, 25))
+        self.image.fill((255, 0, 0))
+
+        rand = randint(1, 24)
+        self.x_pos = rand * 25
+        '''Poprawne umieszczanie klocka w wierszach i kolumnach'''
+        rand = randint(1, 24)
+        self.y_pos = rand * 25
+
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
 
 pygame.init()
 screen = pygame.display.set_mode((600, 600))
@@ -7,74 +66,30 @@ pygame.display.set_caption('Snake')
 
 clock = pygame.time.Clock()
 
-head_surf = pygame.Surface((25, 25))
-head_surf.fill((0, 0, 255))
+snake = pygame.sprite.GroupSingle()
+snake.add(Snake())
 
-head_rect = head_surf.get_rect(center=(300, 300))
+apple = pygame.sprite.GroupSingle()
+apple.add(Apple())
 
-w_pressed = False
-s_pressed = False
-a_pressed = False
-d_pressed = False
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            pygame.quit()
+            exit()
         if event.type == pygame.KEYDOWN:
-            screen.fill((0, 0, 0))
-            match(event.key):
-                case pygame.K_ESCAPE:
-                    pygame.quit()
-                    exit()
-                case pygame.K_w:
-                    w_pressed = True
-                    s_pressed = False
-                    a_pressed =False
-                    d_pressed = False
-                case pygame.K_s:
-                    w_pressed = False
-                    s_pressed = True
-                    a_pressed = False
-                    d_pressed = False
-                case pygame.K_a:
-                    w_pressed = False
-                    s_pressed = False
-                    a_pressed = True
-                    d_pressed = False
-                case pygame.K_d:
-                    pass
-                    w_pressed = False
-                    s_pressed = False
-                    a_pressed = False
-                    d_pressed = True
+            snake.update(event.key, True)
 
-    if w_pressed:
-        screen.fill((0, 0, 0))
-        head_rect.y -= 25
-        if head_rect.top <= 0:
-            head_rect.top = 0
+    screen.fill((0, 0, 0))  # Clear the scree
+    snake.draw(screen)  # Draw the snake
+    snake.update(None, False)
 
-    if s_pressed:
-        screen.fill((0, 0, 0))
-        head_rect.y += 25
-        if head_rect.bottom >= 600:
-            head_rect.bottom = 600
-
-    if a_pressed:
-        screen.fill((0, 0, 0))
-        head_rect.x -= 25
-        if head_rect.left <= 0:
-            head_rect.left = 0
-
-    if d_pressed:
-        screen.fill((0, 0, 0))
-        head_rect.x += 25
-        if head_rect.right>= 600:
-            head_rect.right = 600
-
-    screen.blit(head_surf, head_rect)
+    apple.draw(screen)
+    apple.update()
 
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(15)
