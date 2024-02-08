@@ -12,13 +12,13 @@ class Snake(pygame.sprite.Sprite):
         self.direction = None
 
     def player_input(self, key_pressed):
-        if key_pressed == pygame.K_w:
+        if key_pressed == pygame.K_w and self.direction != 'down':
             self.direction = 'up'
-        elif key_pressed == pygame.K_s:
+        elif key_pressed == pygame.K_s and self.direction != 'up':
             self.direction = 'down'
-        elif key_pressed == pygame.K_a:
+        elif key_pressed == pygame.K_a and self.direction != 'right':
             self.direction = 'left'
-        elif key_pressed == pygame.K_d:
+        elif key_pressed == pygame.K_d and self.direction != 'left':
             self.direction = 'right'
 
     def move(self):
@@ -75,7 +75,7 @@ def collision():
     score_text_rect = score_text.get_rect(midleft=(25, 650))
     screen.blit(score_text, score_text_rect)
 
-    if pygame.sprite.spritecollide(snake.sprite, apple, True):
+    if pygame.sprite.spritecollide(snake_head.sprite, apple, True):
         apple.add(Apple())
         score += 1
 
@@ -84,32 +84,33 @@ pygame.init()
 screen = pygame.display.set_mode((600, 700))
 pygame.display.set_caption('Snake')
 
-#Font
+# Font
 text_font = pygame.font.Font(None, 25)
 
-#Score display
+# Score display
 score_display_surf = pygame.Surface((600, 100))
 score_display_surf.fill('#ffffff')
 score_display = score_display_surf.get_rect(topleft=(0, 600))
 
-#GameOver/Intro screen
+# GameOver/Intro screen
 over = text_font.render('Game Over... Press any key to continue', False, 'White')
 over_rect = over.get_rect(center=(300, 300))
 
-#Game clock
+# Game clock
 clock = pygame.time.Clock()
 
-#Sprites
-snake = pygame.sprite.GroupSingle()
-snake.add(Snake())
+# Sprites
+snake_head = pygame.sprite.GroupSingle()
+snake_head.add(Snake())
 
 apple = pygame.sprite.GroupSingle()
 apple.add(Apple())
 
-#Global variables
+# Global variables
 score = 0
 
 game_active = False
+
 
 while True:
     for event in pygame.event.get():
@@ -120,7 +121,7 @@ while True:
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN:
-            snake.update(event.key, True)
+            snake_head.update(event.key, True)
             game_active = True
 
     screen.fill((0, 0, 0))  # Clear the screen
@@ -128,8 +129,8 @@ while True:
     screen.blit(score_display_surf, score_display)
 
     if game_active:
-        snake.draw(screen)  # Draw the snake
-        snake.update(None, False)
+        snake_head.draw(screen)  # Draw the snake
+        snake_head.update(None, False)
 
         apple.draw(screen)  # Draw the apple
         apple.update()
