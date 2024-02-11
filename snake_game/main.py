@@ -10,6 +10,8 @@ class Snake(pygame.sprite.Sprite):
         self.image.fill((0, 0, 255))
         self.rect = self.image.get_rect(topleft=(300, 300))
         self.direction = None
+        self.head_x = self.rect.centerx
+        self.head_y = self.rect.centery
 
     def player_input(self, key_pressed):
         if key_pressed == pygame.K_w and self.direction != 'down':
@@ -47,11 +49,16 @@ class Snake(pygame.sprite.Sprite):
                 self.rect.topleft = (300, 300)
                 game_active = False
 
+    def get_pos(self):
+        return self.head_x, self.head_y
+
     def update(self, key_pressed, update):
         if update:
             self.player_input(key_pressed)
         else:
             self.move()
+            self.head_x = self.rect.centerx
+            self.head_y = self.rect.centery
 
 
 class Apple(pygame.sprite.Sprite):
@@ -69,15 +76,29 @@ class Apple(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
 
 
+class SnakeBody(Snake):
+    def __init__(self, pos):
+        super().__init__()
+        self.image = pygame.Surface((25, 25))
+        self.image.fill((0, 255, 0))
+        self.x_pos = pos[0]
+        self.y_pos = pos[1]
+        self.rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
+
+
 def collision():
-    global score
+    global score, head_pos
     score_text = text_font.render(f'Your score: {score}', False, (55, 55, 55), None)
     score_text_rect = score_text.get_rect(midleft=(25, 650))
     screen.blit(score_text, score_text_rect)
 
     if pygame.sprite.spritecollide(snake_head.sprite, apple, True):
         apple.add(Apple())
+        snake_body.add(SnakeBody(head_pos))
         score += 1
+
+    # if pygame.sprite.spritecollide(snake_head.sprite, apple, False):
+    #     snake_body.add(SnakeBody(100,100))
 
 
 pygame.init()
@@ -106,11 +127,14 @@ snake_head.add(Snake())
 apple = pygame.sprite.GroupSingle()
 apple.add(Apple())
 
+snake_body = pygame.sprite.Group()
+
 # Global variables
 score = 0
 
 game_active = False
 
+head_pos = Snake().get_pos()
 
 while True:
     for event in pygame.event.get():
@@ -135,11 +159,18 @@ while True:
         apple.draw(screen)  # Draw the apple
         apple.update()
 
+        snake_body.draw(screen)
+        snake_body.update(None, False)
+
         collision()
+
+        head_pos = Snake().get_pos()
+
     else:
-        score = 0
         screen.blit(over, over_rect)
         collision()
+        score = 0
+        snake_body.empty()
 
     pygame.display.update()
     clock.tick(15)
