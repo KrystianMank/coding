@@ -1,0 +1,15 @@
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\bin\Debug\zadaniaRegexy.exe.config
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\bin\Debug\zadaniaRegexy.exe
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\bin\Debug\zadaniaRegexy.pdb
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.csproj.AssemblyReference.cache
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\MainWindow.g.cs
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\App.g.cs
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy_MarkupCompile.cache
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy_MarkupCompile.lref
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\MainWindow.baml
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.g.resources
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.Properties.Resources.resources
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.csproj.GenerateResource.cache
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.csproj.CoreCompileInputs.cache
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.exe
+C:\Users\Użytkownik\Documents\coding\zadaniaRegexy\obj\Debug\zadaniaRegexy.pdb
