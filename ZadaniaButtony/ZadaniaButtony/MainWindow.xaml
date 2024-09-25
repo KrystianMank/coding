@@ -6,14 +6,12 @@
         xmlns:local="clr-namespace:ZadaniaButtony"
         mc:Ignorable="d"
         Title="Zadania Buttony" Height="450" Width="800">
-    <Window.Resources>
-        <Style x:Key="zablokuj" TargetType="Button">
-            <Setter Property="IsEnabled" Value="True"/>
-        </Style>
-    </Window.Resources>
+    
     <Grid>
         <Button x:Name="btnPowieksz" Content="Powiększ przycisk" Width="100" Height="25" HorizontalAlignment="Left" Margin="360,197,0,0" VerticalAlignment="Top" Click="btnPowieksz_Click"/>
-        <Button x:Name="btnZablokuj" Content="Zablokuj przyciski" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="btnZablokuj" Content="Zablokuj przyciski" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnZablokuj_Click"/>
+        <Button x:Name="button1" Content="Kliknij 1" HorizontalAlignment="Left" Margin="722,10,0,0" VerticalAlignment="Top" Click="button1_Click"/>
+        <Button x:Name="button2" Content="Kliknij 2" HorizontalAlignment="Left" Margin="722,35,0,0" VerticalAlignment="Top" Click="button2_Click"/>
 
     </Grid>
 </Window>
